@@ -1,4 +1,3 @@
-// sqlFileRunner.ts
 import { spawnSync } from "child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
