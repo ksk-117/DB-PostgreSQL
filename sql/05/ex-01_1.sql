@@ -1,29 +1,13 @@
--- トランザクションの開始
 START TRANSACTION;
 
--- 操作1 Carol の登録 (成功)
-INSERT INTO
-    s_users (id, name, age)
-VALUES
-    (3, 'Carol', 18);
+DELETE FROM s_characters
+WHERE
+  DATE '2025-10-15' - CAST(last_login_at AS DATE) >= 60;
 
--- 操作2 Dave の登録 (成功)
-INSERT INTO
-    s_users (id, name, age)
-VALUES
-    (4, 'Dave', NULL);
+ROLLBACK;
 
--- 操作3 Ellen の登録 (成功)
-INSERT INTO
-    s_users (id, name, age)
-VALUES
-    (5, 'Ellen', 17);
-
--- START TRANSACTION 以降の全ての操作が成功していれば「確定」
-COMMIT;
-
--- テーブルの状態を確認
 SELECT
-    *
-FROM
-    s_users;
+  id,
+  name,
+  last_login_at,
+  DATE '2025-10-15' - CAST(last_login_at AS DATE) || ' days ago' AS "Days Since Last Login"
